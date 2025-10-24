@@ -20,17 +20,18 @@ def Get_pdf():
     pdf = textBox.get().strip()
     reader = PyPDF2.PdfReader(pdf)
 
-    datas = re.findall(r"\d{4}-\d{2}-\d{2}",reader.pages[0].extract_text(), )
-    
+    datas = re.findall(r"\d{4}-\d{2}-\d{2}",reader.pages[0].extract_text())
+
+    feriadosEncontrados = []
     for data in datas:
         for feriado in feriados:
             if data == feriado["date"]:
-               print("Feriado: " + data)
+               feriadosEncontrados.append(data)
 
-
+    labelFeriado.config(text=(feriadosEncontrados))
 
 root = tkinter.Tk()
-root.title("Titulo da janela")
+root.title("Trabalho pyhton")
 root.geometry("350x200")
 root.resizable(False, False)
 
@@ -44,7 +45,16 @@ button = tkinter.Button(root, text="Buscar")
 button['command'] = Get_pdf
 button.pack()
 
+labelFeriado = tkinter.Label(root, text="")
+labelFeriado.pack()
+
 root.mainloop()
+
+
+
+
+
+
 
 
    
